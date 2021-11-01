@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [v0.43.0](https://github.com/line/lbm-sdk/releases/tag/v0.43.0)
+
 ### Features
 * (feat) [\#352] (https://github.com/line/lbm-sdk/pull/352) iavl, db & disk stats logging
 * (gov) [\#7733](https://github.com/line/lbm-sdk/pull/360) Governance Split Votes, use `MsgWeightedVote` to send a split vote. Sending a regular `MsgVote` will convert the underlying vote option into a weighted vote with weight 1.
