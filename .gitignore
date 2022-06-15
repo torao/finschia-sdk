@@ -18,23 +18,21 @@ docs/_build
 docs/tutorial
 docs/node_modules
 docs/modules
+docs/run-node/cosmovisor.md
 dist
 tools-stamp
 buf-stamp
 artifacts
-.vscode
-output
-tools/bin/*
-examples/build/*
 
 # Data - ideally these don't exist
 baseapp/data/*
+client/lcd/keys/*
+mytestnet
 
 # Testing
 coverage.txt
 profile.out
 sim_log_file
-client/keys/home/
 
 # Vagrant
 .vagrant/
@@ -55,4 +53,3 @@ dependency-graph.png
 *.aux
 *.out
 *.synctex.gz
-
