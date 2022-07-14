@@ -70,17 +70,8 @@ func (st *Store) Prefetch(key []byte, forSet bool) (hits, misses int, value []by
 		return
 	}
 	defer telemetry.MeasureSince(time.Now(), "store", "iavl", "load")
-	select {
-	case prefetchJobs <- func() {
-		defer func() {
-			// ignore panic
-			recover()
-		}()
-		st.tree.Prefetch(key, forSet)
-	}:
-		// good
-	default:
-		// drop this request
-	}
+
+	// XXX: change to prefetch synchronously to verify effectiveness in bencharking
+	st.tree.Prefetch(key, forSet)
 	return
 }
