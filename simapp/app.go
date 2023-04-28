@@ -86,6 +86,9 @@ import (
 	paramskeeper "github.com/line/lbm-sdk/x/params/keeper"
 	paramstypes "github.com/line/lbm-sdk/x/params/types"
 	paramproposal "github.com/line/lbm-sdk/x/params/types/proposal"
+	"github.com/line/lbm-sdk/x/rollup"
+	rollupkeeper "github.com/line/lbm-sdk/x/rollup/keeper"
+	rollupmodule "github.com/line/lbm-sdk/x/rollup/module"
 	"github.com/line/lbm-sdk/x/slashing"
 	slashingkeeper "github.com/line/lbm-sdk/x/slashing/keeper"
 	slashingtypes "github.com/line/lbm-sdk/x/slashing/types"
@@ -201,6 +204,7 @@ type SimApp struct {
 	ClassKeeper      classkeeper.Keeper
 	TokenKeeper      tokenkeeper.Keeper
 	CollectionKeeper collectionkeeper.Keeper
+	RollupKeeper     rollupkeeper.Keeper
 
 	// the module manager
 	mm *module.Manager
@@ -356,6 +360,8 @@ func NewSimApp(
 	// If evidence needs to be handled for the app, set routes in router here and seal
 	app.EvidenceKeeper = *evidenceKeeper
 
+	app.RollupKeeper = rollupkeeper.NewKeeper()
+
 	/****  Module Options ****/
 
 	// NOTE: we may consider parsing `appOpts` inside module constructors. For the moment
@@ -387,6 +393,7 @@ func NewSimApp(
 		tokenmodule.NewAppModule(appCodec, app.TokenKeeper),
 		collectionmodule.NewAppModule(appCodec, app.CollectionKeeper),
 		authzmodule.NewAppModule(appCodec, app.AuthzKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
+		rollupmodule.NewAppModule(app.RollupKeeper),
 	)
 
 	// During begin block slashing happens after distr.BeginBlocker so that
@@ -414,6 +421,7 @@ func NewSimApp(
 		vestingtypes.ModuleName,
 		token.ModuleName,
 		collection.ModuleName,
+		rollup.ModuleName,
 	)
 	app.mm.SetOrderEndBlockers(
 		crisistypes.ModuleName,
@@ -435,6 +443,7 @@ func NewSimApp(
 		foundation.ModuleName,
 		token.ModuleName,
 		collection.ModuleName,
+		rollup.ModuleName,
 	)
 
 	// NOTE: The genutils module must occur after staking so that pools are
@@ -462,6 +471,7 @@ func NewSimApp(
 		vestingtypes.ModuleName,
 		token.ModuleName,
 		collection.ModuleName,
+		rollup.ModuleName,
 	)
 
 	// Uncomment if you want to set a custom migration order here.

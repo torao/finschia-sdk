@@ -1,0 +1,19 @@
+syntax = "proto3";
+package lbm.roll.v1;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/line/lbm-sdk/x/rollup";
+
+option (gogoproto.equal_all)           = false;
+option (gogoproto.goproto_getters_all) = false;
+
+// DA defines the services as Data Availability Layer for L2.
+service DA {
+  // Submit defines a method to submit (batched) blocks from L2
+  rpc Submit(SubmitRequest) returns (SubmitResponse);
+}
+
+message SubmitRequest {}
+
+message SubmitResponse {}
